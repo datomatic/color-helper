@@ -680,4 +680,36 @@ class Color
 
         return ['c' => $c, 'm' => $m, 'y' => $y, 'k' => $k];
     }
+
+    /**
+     * @return float
+     */
+    public function luminosity(): float
+    {
+        return 0.2126 * pow($this->rgb['r']/255, 2.2) +
+            0.7152 * pow($this->rgb['g']/255, 2.2) +
+            0.0722 * pow($this->rgb['b']/255, 2.2);
+    }
+
+    public static function contrastColors(Color $color1, Color $color2): float
+    {
+        $l1 = $color1->luminosity();
+        $l2 = $color2->luminosity();
+
+        if($l1 > $l2){
+            return ($l1+0.05) / ($l2+0.05);
+        }else{
+            return ($l2+0.05) / ($l1+0.05);
+        }
+    }
+
+    /**
+     * @param Color $color
+     * @return float
+     */
+    public function contrast(Color $color):float
+    {
+        return self::contrastColors($this,$color);
+    }
+
 }

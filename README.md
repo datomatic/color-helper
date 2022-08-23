@@ -20,7 +20,10 @@ composer require datomatic/color-helper
 ```php
 use Datomatic\Color\Color;
 $color = Color::fromHex('#ffffff');
-echo $color->rgb();
+$color->rgb(); // ['r' => 255, 'g' => 255, 'b' => 255] 
+$color->hsl(); // ['h' => 0, 's' => 0, 'l' => 100] 
+$color->hsv(); // ['h' => 0, 's' => 0, 'v' => 100] 
+$color->cmyk(); // ['c' => 0, 'm' => 0, 'y' => 0, 'k' => 0] 
 ```
 
 ## Testing
