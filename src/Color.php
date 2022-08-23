@@ -424,4 +424,12 @@ class Color
         return new Color($r, $g, $b);
     }
 
+    /**
+     * @return self
+     */
+    public function clone(): self
+    {
+        return new Color(...$this->rgb);
+    }
+
 }
