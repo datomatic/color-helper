@@ -1,6 +1,3 @@
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/support-ukraine.svg?t=1" />](https://supportukrainenow.org)
-
 # A PHP toolkit class to manage colors functionalities
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/datomatic/color-helper.svg?style=flat-square)](https://packagist.org/packages/datomatic/color-helper)
@@ -10,14 +7,6 @@
 
 This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
 
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/color-helper.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/color-helper)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
-
 ## Installation
 
 You can install the package via composer:
@@ -26,37 +15,12 @@ You can install the package via composer:
 composer require datomatic/color-helper
 ```
 
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="color-helper-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag="color-helper-config"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="color-helper-views"
-```
-
 ## Usage
 
 ```php
-$color = new Datomatic\Color();
-echo $color->echoPhrase('Hello, Datomatic!');
+use Datomatic\Color\Color;
+$color = Color::fromHex('#ffffff');
+echo $color->rgb();
 ```
 
 ## Testing

@@ -161,7 +161,7 @@ it('can instantiate from string', function (string $string, string $hex) {
     ['white', '#ffffff'],
     ['whitesmoke', '#f5f5f5'],
     ['yellow', '#ffff00'],
-    ['yellowgreen', '#9acd32']
+    ['yellowgreen', '#9acd32'],
 ]);
 
 it('can instantiate from hex', function (string $hex, string $res) {
@@ -169,47 +169,44 @@ it('can instantiate from hex', function (string $hex, string $res) {
     expect($enum)->toBeInstanceOf(Color::class);
     expect($enum->hex())->toBe($res);
 })->with([
-    ['#f0f8ff','#f0f8ff'],
-    ['f0f8ff','#f0f8ff'],
-    ['#ff8','#ffff88'],
-    ['ff8','#ffff88'],
+    ['#f0f8ff', '#f0f8ff'],
+    ['f0f8ff', '#f0f8ff'],
+    ['#ff8', '#ffff88'],
+    ['ff8', '#ffff88'],
 ]);
 
 it('can instantiate from rgb', function (int $r, int $g, int $b, string $res) {
-    $enum = Color::fromRgb($r,$g,$b);
+    $enum = Color::fromRgb($r, $g, $b);
     expect($enum)->toBeInstanceOf(Color::class);
     expect($enum->hex())->toBe($res);
 })->with([
-    [240, 248, 255,'#f0f8ff'],
-    [255, 255, 136,'#ffff88'],
+    [240, 248, 255, '#f0f8ff'],
+    [255, 255, 136, '#ffff88'],
 ]);
 
 it('can instantiate from hsv', function (int $h, int $s, int $v, string $res) {
-    $enum = Color::fromHsv($h,$s,$v);
+    $enum = Color::fromHsv($h, $s, $v);
     expect($enum)->toBeInstanceOf(Color::class);
     expect($enum->hex())->toBe($res);
 })->with([
-    [208, 6, 100,'#f0f8ff'],
-    [60, 47, 100,'#ffff87'],
+    [208, 6, 100, '#f0f8ff'],
+    [60, 47, 100, '#ffff87'],
 ]);
 
 it('can instantiate from hsl', function (int $h, int $s, int $l, string $res) {
-    $enum = Color::fromHsl($h,$s,$l);
+    $enum = Color::fromHsl($h, $s, $l);
     expect($enum)->toBeInstanceOf(Color::class);
     expect($enum->hex())->toBe($res);
 })->with([
-    [208, 100, 97,'#f0f8ff'],
-    [60, 100, 76,'#ffff85'],
+    [208, 100, 97, '#f0f8ff'],
+    [60, 100, 76, '#ffff85'],
 ]);
-
 
 it('can instantiate from cmyk', function (int $c, int $m, int $y, int $k, string $res) {
-    $enum = Color::fromCmyk($c,$m,$y,$k);
+    $enum = Color::fromCmyk($c, $m, $y, $k);
     expect($enum)->toBeInstanceOf(Color::class);
     expect($enum->hex())->toBe($res);
 })->with([
-    [6, 3, 0, 0,'#f0f7ff'],
-    [0, 1, 48, 0,'#fffc85'],
+    [6, 3, 0, 0, '#f0f7ff'],
+    [0, 1, 48, 0, '#fffc85'],
 ]);
-
-
