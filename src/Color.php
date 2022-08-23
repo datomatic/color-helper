@@ -6,6 +6,9 @@ use Datomatic\Color\Exceptions\ColorConstructException;
 
 class Color
 {
+    /** @var array<string,int> */
+    protected array $rgb = [];
+
     protected string $hex = '';
 
     /** @var array<string,int> */
@@ -18,8 +21,11 @@ class Color
     protected array $cmyk = [];
 
     /** @param array<string,int> $rgb */
-    public function __construct(protected array $rgb)
+    public function __construct(int $r, int $g, int $b)
     {
+        $rgb = self::sanitizeRgb($r, $g, $b);
+
+        $this->rgb = $rgb;
     }
 
     /* From methods */
@@ -47,9 +53,7 @@ class Color
      */
     public static function fromRgb(int $r, int $g, int $b): Color
     {
-        $rgb = self::sanitizeRgb($r, $g, $b);
-
-        return new Color($rgb);
+        return new Color($r, $g, $b);
     }
 
     /**
