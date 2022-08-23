@@ -562,7 +562,7 @@ class Color
         $m = $m - $k;
         $y = $y - $k;
 
-        return ['c' => intval($c), 'm' => intval($m), 'y' => intval($y), 'k' => intval($k)];
+        return ['c' => (int) round($c), 'm' => (int) round($m), 'y' => (int) round($y), 'k' => (int) round($k)];
     }
 
     /**
@@ -760,9 +760,9 @@ class Color
         $rgb1 = $color1->rgb();
         $rgb2 = $color2->rgb();
 
-        $r = intval($rgb1['r']*(1-$ratio)+$rgb2['r']*$ratio);
-        $g = intval($rgb1['g']*(1-$ratio)+$rgb2['g']*$ratio);
-        $b = intval($rgb1['b']*(1-$ratio)+$rgb2['b']*$ratio);
+        $r = (int) round($rgb1['r']*(1-$ratio)+$rgb2['r']*$ratio);
+        $g = (int) round($rgb1['g']*(1-$ratio)+$rgb2['g']*$ratio);
+        $b = (int) round($rgb1['b']*(1-$ratio)+$rgb2['b']*$ratio);
 
         return new Color(['r' => $r, 'g' => $g, 'b' => $b]);
     }
@@ -775,6 +775,31 @@ class Color
     public function mix(Color $color, float $ratio = 0.5): Color
     {
         return self::mixColors($this, $color, $ratio);
+    }
+
+
+
+    /**
+     * @param array<Color> $colors
+     * @return Color
+     */
+    public static function averageColors(array $colors): Color
+    {
+        $r = $g = $b = 0;
+
+        foreach($colors as $color){
+            $rgb = $color->rgb();
+            $r += $rgb['r'];
+            $g += $rgb['g'];
+            $b += $rgb['b'];
+        }
+
+        $count = count($colors);
+        $r /= $count;
+        $g /= $count;
+        $b /= $count;
+
+        return new Color(['r' => (int) round($r), 'g' => (int) round($g), 'b' => (int) round($b)]);
     }
 
 }
