@@ -2,7 +2,6 @@
 
 namespace Datomatic\Color;
 
-use Datomatic\Color\Exceptions\ColorConstructException;
 
 class ColorConversion
 {
@@ -19,14 +18,9 @@ class ColorConversion
     /**
      * @param string $hex
      * @return array<string,int>
-     *
-     * @throws ColorConstructException
      */
     public static function hexToRgb(string $hex): array
     {
-        /** @var string $hex */
-        $hex = self::sanitizeHex($hex);
-
         $r = hexdec(substr($hex, 0, 2));
         $g = hexdec(substr($hex, 2, 2));
         $b = hexdec(substr($hex, 4, 2));
@@ -56,7 +50,7 @@ class ColorConversion
             $h = 60 * ((($r - $g) / $delta) + 4);
         }
 
-        $s = (bool) ($max ? $delta / $max : 0);
+        $s = (bool)($max ? $delta / $max : 0);
 
         $v = $max;
 
@@ -79,11 +73,10 @@ class ColorConversion
                 $rgb[$i % 3] = 1 - (($distance - 60) / 60);
             }
         }
-        //desaturate by increasing lower levels
+
         $max = max($rgb);
         $factor = 255 * ($v / 100);
         for ($i = 0; $i < 3; $i++) {
-            //use distance between 0 and max (1) and multiply with value
             $rgb[$i] = (int)round(($rgb[$i] + ($max - $rgb[$i]) * (1 - $s / 100)) * $factor);
         }
 
@@ -109,7 +102,7 @@ class ColorConversion
         $d = $max - $min;
 
         if ($d == 0) {
-            $h = $s = 0; // achromatic
+            $h = $s = 0;
         } else {
             $s = $d / (1 - abs(2 * $l - 1));
             $h = 0;
@@ -205,7 +198,7 @@ class ColorConversion
         $m = $m - $k;
         $y = $y - $k;
 
-        return ['c' => (int) round($c), 'm' => (int) round($m), 'y' => (int) round($y), 'k' => (int) round($k)];
+        return ['c' => (int)round($c), 'm' => (int)round($m), 'y' => (int)round($y), 'k' => (int)round($k)];
     }
 
     /**
