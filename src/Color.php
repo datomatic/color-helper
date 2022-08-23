@@ -67,7 +67,7 @@ class Color
         $hex = self::sanitizeHex($hex);
         $rgb = ColorConversion::hexToRgb($hex);
 
-        return (new Color($rgb))->setHex($hex);
+        return (new Color(...$rgb))->setHex($hex);
     }
 
     /**
@@ -81,7 +81,7 @@ class Color
         $hsv = self::sanitizeHsv($h, $s, $v);
         $rgb = ColorConversion::hsvToRgb(...$hsv);
 
-        return (new Color($rgb))->setHsv($hsv);
+        return (new Color(...$rgb))->setHsv($hsv);
     }
 
     /**
@@ -95,7 +95,7 @@ class Color
         $hsl = self::sanitizeHsl($h, $s, $l);
         $rgb = ColorConversion::hslToRgb(...$hsl);
 
-        return (new Color($rgb))->setHsl($hsl);
+        return (new Color(...$rgb))->setHsl($hsl);
     }
 
     /**
@@ -111,7 +111,7 @@ class Color
         $cmyk = self::sanitizeCmyk($c, $m, $y, $k);
         $rgb = ColorConversion::cmykToRgb(...$cmyk);
 
-        return (new Color($rgb))->setCmyk(['c' => $c, 'm' => $m, 'y' => $y, 'k' => $k]);
+        return (new Color(...$rgb))->setCmyk(['c' => $c, 'm' => $m, 'y' => $y, 'k' => $k]);
     }
 
 
