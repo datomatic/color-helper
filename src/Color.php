@@ -297,6 +297,17 @@ class Color
 
     /* Export methods */
 
+    /**
+     * @return array<string,int>
+     */
+    public function rgb(): array
+    {
+        return $this->rgb;
+    }
+
+    /**
+     * @return string
+     */
     public function hex(): string
     {
         if (!$this->hex) {
@@ -713,12 +724,12 @@ class Color
     }
 
     /**
-     * @param Color ...$colors
+     * @param array<Color> $colors
      * @return Color
      */
-    public function bestContrastColor(Color ...$colors): Color
+    public function bestContrastColor(array $colors): Color
     {
-        $bestColor = null;
+        $bestColor = $colors[0];
         $bestContrast = 0;
         foreach ($colors as $color) {
             $contrast = $this->contrast($color);
@@ -749,9 +760,9 @@ class Color
         $rgb1 = $color1->rgb();
         $rgb2 = $color2->rgb();
 
-        $r = ($rgb1['r']*(1-$ratio)+$rgb2['r']*$ratio);
-        $g = ($rgb1['g']*(1-$ratio)+$rgb2['g']*$ratio);
-        $b = ($rgb1['b']*(1-$ratio)+$rgb2['b']*$ratio);
+        $r = intval($rgb1['r']*(1-$ratio)+$rgb2['r']*$ratio);
+        $g = intval($rgb1['g']*(1-$ratio)+$rgb2['g']*$ratio);
+        $b = intval($rgb1['b']*(1-$ratio)+$rgb2['b']*$ratio);
 
         return new Color(['r' => $r, 'g' => $g, 'b' => $b]);
     }
