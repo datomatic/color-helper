@@ -17,7 +17,7 @@ class Color
     /** @var array<string,int> */
     protected array $cmyk = [];
 
-    /** @param  array<string,int>  $rgb */
+    /** @param array<string,int> $rgb */
     public function __construct(protected array $rgb)
     {
     }
@@ -25,7 +25,7 @@ class Color
     /* From methods */
 
     /**
-     * @param  string  $name
+     * @param string $name
      * @return Color
      *
      * @throws ColorConstructException
@@ -194,9 +194,9 @@ class Color
     }
 
     /**
-     * @param  int  $r
-     * @param  int  $g
-     * @param  int  $b
+     * @param int $r
+     * @param int $g
+     * @param int $b
      * @return Color
      */
     public static function fromRgb(int $r, int $g, int $b): Color
@@ -207,7 +207,7 @@ class Color
     }
 
     /**
-     * @param  string  $hex
+     * @param string $hex
      * @return Color
      *
      * @throws ColorConstructException
@@ -221,9 +221,9 @@ class Color
     }
 
     /**
-     * @param  int  $h
-     * @param  int  $s
-     * @param  int  $v
+     * @param int $h
+     * @param int $s
+     * @param int $v
      * @return Color
      */
     public static function fromHsv(int $h, int $s, int $v): Color
@@ -235,9 +235,9 @@ class Color
     }
 
     /**
-     * @param  int  $h
-     * @param  int  $s
-     * @param  int  $l
+     * @param int $h
+     * @param int $s
+     * @param int $l
      * @return Color
      */
     public static function fromHsl(int $h, int $s, int $l): Color
@@ -249,10 +249,10 @@ class Color
     }
 
     /**
-     * @param  int  $c
-     * @param  int  $m
-     * @param  int  $y
-     * @param  int  $k
+     * @param int $c
+     * @param int $m
+     * @param int $y
+     * @param int $k
      * @return Color
      */
     public static function fromCmyk(int $c, int $m, int $y, int $k): Color
@@ -271,7 +271,7 @@ class Color
         return $this;
     }
 
-    /**  @param  null|array<string,int>  $hsv */
+    /**  @param null|array<string,int> $hsv */
     protected function setHsv(?array $hsv = null): self
     {
         $this->hsv = $hsv ?? self::rgbToHsv(...$this->rgb);
@@ -279,7 +279,7 @@ class Color
         return $this;
     }
 
-    /**  @param  null|array<string,int>  $hsl */
+    /**  @param null|array<string,int> $hsl */
     protected function setHsl(?array $hsl = null): self
     {
         $this->hsl = $hsl ?? self::rgbToHsl(...$this->rgb);
@@ -287,7 +287,7 @@ class Color
         return $this;
     }
 
-    /**  @param  null|array<string,int>  $cmyk */
+    /**  @param null|array<string,int> $cmyk */
     protected function setCmyk(?array $cmyk = null): self
     {
         $this->cmyk = $cmyk ?? self::rgbToCmyk(...$this->rgb);
@@ -299,11 +299,11 @@ class Color
 
     public function hex(): string
     {
-        if (! $this->hex) {
+        if (!$this->hex) {
             $this->setHex();
         }
 
-        return '#'.$this->hex;
+        return '#' . $this->hex;
     }
 
     /**
@@ -311,7 +311,7 @@ class Color
      */
     public function hsv(): array
     {
-        if (! $this->hsv) {
+        if (!$this->hsv) {
             $this->setHsv();
         }
 
@@ -323,7 +323,7 @@ class Color
      */
     public function hsl(): array
     {
-        if (! $this->hsl) {
+        if (!$this->hsl) {
             $this->setHsl();
         }
 
@@ -335,7 +335,7 @@ class Color
      */
     public function cmyk(): array
     {
-        if (! $this->cmyk) {
+        if (!$this->cmyk) {
             $this->setCmyk();
         }
 
@@ -350,7 +350,7 @@ class Color
     /* Conversion static methods */
 
     /**
-     * @param  array<string,int>  $rbg
+     * @param array<string,int> $rbg
      * @return string
      */
     public static function rgbToHex(array $rbg): string
@@ -359,7 +359,7 @@ class Color
     }
 
     /**
-     * @param  string  $hex
+     * @param string $hex
      * @return array<string,int>
      *
      * @throws ColorConstructException
@@ -373,13 +373,13 @@ class Color
         $g = hexdec(substr($hex, 2, 2));
         $b = hexdec(substr($hex, 4, 2));
 
-        return ['r' => (int) round($r), 'g' => (int) round($g), 'b' => (int) round($b)];
+        return ['r' => (int)round($r), 'g' => (int)round($g), 'b' => (int)round($b)];
     }
 
     /**
-     * @param  int  $r
-     * @param  int  $b
-     * @param  int  $g
+     * @param int $r
+     * @param int $b
+     * @param int $g
      * @return array<string,int>
      */
     public static function rgbToHsv(int $r, int $b, int $g): array
@@ -388,7 +388,7 @@ class Color
         $min = min($r, $g, $b);
         $delta = $max - $min;
 
-        if (! $delta) {
+        if (!$delta) {
             $h = 0;
         } elseif ($r === $max) {
             $h = 60 * ((($g - $b) / $delta) % 6);
@@ -398,17 +398,17 @@ class Color
             $h = 60 * ((($r - $g) / $delta) + 4);
         }
 
-        $s = (bool) $max ? $delta / $max : 0;
+        $s = (bool)$max ? $delta / $max : 0;
 
         $v = $max;
 
-        return ['h' => (int) floor($h), 's' => (int) floor($s), 'v' => (int) floor($v)];
+        return ['h' => (int)floor($h), 's' => (int)floor($s), 'v' => (int)floor($v)];
     }
 
     /**
-     * @param  int  $h
-     * @param  int  $s
-     * @param  int  $v
+     * @param int $h
+     * @param int $s
+     * @param int $v
      * @return array<string,int>
      */
     public static function hsvToRgb(int $h, int $s, int $v): array
@@ -426,16 +426,16 @@ class Color
         $factor = 255 * ($v / 100);
         for ($i = 0; $i < 3; $i++) {
             //use distance between 0 and max (1) and multiply with value
-            $rgb[$i] = (int) round(($rgb[$i] + ($max - $rgb[$i]) * (1 - $s / 100)) * $factor);
+            $rgb[$i] = (int)round(($rgb[$i] + ($max - $rgb[$i]) * (1 - $s / 100)) * $factor);
         }
 
-        return ['r' => (int) $rgb[0], 'g' => (int) $rgb[1], 'b' => (int) $rgb[2]];
+        return ['r' => (int)$rgb[0], 'g' => (int)$rgb[1], 'b' => (int)$rgb[2]];
     }
 
     /**
-     * @param  int  $r
-     * @param  int  $g
-     * @param  int  $b
+     * @param int $r
+     * @param int $g
+     * @param int $b
      * @return array<string,int>
      */
     public static function rgbToHsl(int $r, int $g, int $b): array
@@ -477,13 +477,13 @@ class Color
             }
         }
 
-        return ['h' => (int) round($h), 's' => (int) round($s), 'l' => (int) round($l)];
+        return ['h' => (int)round($h), 's' => (int)round($s), 'l' => (int)round($l)];
     }
 
     /**
-     * @param  int  $h
-     * @param  int  $s
-     * @param  int  $l
+     * @param int $h
+     * @param int $s
+     * @param int $l
      * @return array<string,int>
      */
     public static function hslToRgb(int $h, int $s, int $l): array
@@ -527,9 +527,9 @@ class Color
         }
 
         $m = $l - $c / 2;
-        $r = (int) round(($r + $m) * 255);
-        $g = (int) round(($g + $m) * 255);
-        $b = (int) round(($b + $m) * 255);
+        $r = (int)round(($r + $m) * 255);
+        $g = (int)round(($g + $m) * 255);
+        $b = (int)round(($b + $m) * 255);
 
         return ['r' => $r, 'g' => $g, 'b' => $b];
     }
@@ -555,10 +555,10 @@ class Color
     }
 
     /**
-     * @param  int  $c
-     * @param  int  $m
-     * @param  int  $y
-     * @param  int  $k
+     * @param int $c
+     * @param int $m
+     * @param int $y
+     * @param int $k
      * @return array<string,int>
      */
     public static function cmykToRgb(int $c, int $m, int $y, int $k): array
@@ -572,9 +572,9 @@ class Color
         $g = 1 - ($m * (1 - $k)) - $k;
         $b = 1 - ($y * (1 - $k)) - $k;
 
-        $r = (int) round($r * 255);
-        $g = (int) round($g * 255);
-        $b = (int) round($b * 255);
+        $r = (int)round($r * 255);
+        $g = (int)round($g * 255);
+        $b = (int)round($b * 255);
 
         return ['r' => $r, 'g' => $g, 'b' => $b];
     }
@@ -589,9 +589,9 @@ class Color
     }
 
     /**
-     * @param  int  $r
-     * @param  int  $g
-     * @param  int  $b
+     * @param int $r
+     * @param int $g
+     * @param int $b
      * @return array<string,int>
      */
     protected static function sanitizeRgb(int $r, int $g, int $b): array
@@ -604,7 +604,7 @@ class Color
     }
 
     /**
-     * @param  string  $hex
+     * @param string $hex
      * @return string
      *
      * @throws ColorConstructException
@@ -613,12 +613,12 @@ class Color
     {
         $hex = strtolower(str_replace('#', '', $hex));
 
-        if (! preg_match('/^[a-fA-F0-9]+$/', $hex)) {
+        if (!preg_match('/^[a-fA-F0-9]+$/', $hex)) {
             throw ColorConstructException::invalidHexFormat($hex);
         }
 
         if (strlen($hex) === 3) {
-            $hex = $hex[0].$hex[0].$hex[1].$hex[1].$hex[2].$hex[2];
+            $hex = $hex[0] . $hex[0] . $hex[1] . $hex[1] . $hex[2] . $hex[2];
         } elseif (strlen($hex) !== 6) {
             throw ColorConstructException::invalidHexLenght($hex);
         }
@@ -627,9 +627,9 @@ class Color
     }
 
     /**
-     * @param  int  $h
-     * @param  int  $s
-     * @param  int  $v
+     * @param int $h
+     * @param int $s
+     * @param int $v
      * @return array<string,int>
      *
      * @throws ColorConstructException
@@ -645,9 +645,9 @@ class Color
     }
 
     /**
-     * @param  int  $h
-     * @param  int  $s
-     * @param  int  $l
+     * @param int $h
+     * @param int $s
+     * @param int $l
      * @return array<string,int>
      *
      * @throws ColorConstructException
@@ -663,10 +663,10 @@ class Color
     }
 
     /**
-     * @param  int  $c
-     * @param  int  $m
-     * @param  int  $y
-     * @param  int  $k
+     * @param int $c
+     * @param int $m
+     * @param int $y
+     * @param int $k
      * @return array<string,int>
      *
      * @throws ColorConstructException
@@ -686,9 +686,9 @@ class Color
      */
     public function luminosity(): float
     {
-        return 0.2126 * pow($this->rgb['r']/255, 2.2) +
-            0.7152 * pow($this->rgb['g']/255, 2.2) +
-            0.0722 * pow($this->rgb['b']/255, 2.2);
+        return 0.2126 * pow($this->rgb['r'] / 255, 2.2) +
+            0.7152 * pow($this->rgb['g'] / 255, 2.2) +
+            0.0722 * pow($this->rgb['b'] / 255, 2.2);
     }
 
     public static function contrastColors(Color $color1, Color $color2): float
@@ -696,10 +696,10 @@ class Color
         $l1 = $color1->luminosity();
         $l2 = $color2->luminosity();
 
-        if($l1 > $l2){
-            return ($l1+0.05) / ($l2+0.05);
-        }else{
-            return ($l2+0.05) / ($l1+0.05);
+        if ($l1 > $l2) {
+            return ($l1 + 0.05) / ($l2 + 0.05);
+        } else {
+            return ($l2 + 0.05) / ($l1 + 0.05);
         }
     }
 
@@ -707,9 +707,63 @@ class Color
      * @param Color $color
      * @return float
      */
-    public function contrast(Color $color):float
+    public function contrast(Color $color): float
     {
-        return self::contrastColors($this,$color);
+        return self::contrastColors($this, $color);
+    }
+
+    /**
+     * @param Color ...$colors
+     * @return Color
+     */
+    public function bestContrastColor(Color ...$colors): Color
+    {
+        $bestColor = null;
+        $bestContrast = 0;
+        foreach ($colors as $color) {
+            $contrast = $this->contrast($color);
+            if ($contrast > $bestContrast) {
+                $bestColor = $color;
+            }
+        }
+
+        return $bestColor;
+    }
+
+    /**
+     * @return Color
+     */
+    public static function random(): Color
+    {
+        return new Color(['r' => rand(0,255), 'g' => rand(0,255), 'b' => rand(0,255)]);
+    }
+
+    /**
+     * @param Color $color1
+     * @param Color $color2
+     * @param float $ratio
+     * @return Color
+     */
+    public static function mixColors(Color $color1, Color $color2, float $ratio = 0.5): Color
+    {
+        $rgb1 = $color1->rgb();
+        $rgb2 = $color2->rgb();
+
+        $r = ($rgb1['r']*(1-$ratio)+$rgb2['r']*$ratio);
+        $g = ($rgb1['g']*(1-$ratio)+$rgb2['g']*$ratio);
+        $b = ($rgb1['b']*(1-$ratio)+$rgb2['b']*$ratio);
+
+        return new Color(['r' => $r, 'g' => $g, 'b' => $b]);
+    }
+
+    /**
+     * @param Color $color
+     * @param float $ratio
+     * @return Color
+     */
+    public function mix(Color $color, float $ratio = 0.5): Color
+    {
+        return self::mixColors($this, $color, $ratio);
     }
 
 }
