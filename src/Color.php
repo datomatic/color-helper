@@ -22,9 +22,7 @@ class Color
 
     public function __construct(int $r, int $g, int $b)
     {
-        $rgb = self::sanitizeRgb($r, $g, $b);
-
-        $this->rgb = $rgb;
+        $this->rgb = self::sanitizeRgb($r, $g, $b);
     }
 
     /* From methods */
@@ -158,15 +156,16 @@ class Color
     }
 
     /**
+     * @param bool $hash
      * @return string
      */
-    public function hex(): string
+    public function hex(bool $hash = true): string
     {
         if (!$this->hex) {
             $this->setHex();
         }
 
-        return '#' . $this->hex;
+        return ($hash ? '#' : '') . $this->hex;
     }
 
     /**
