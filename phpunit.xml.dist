@@ -10,7 +10,7 @@
     convertNoticesToExceptions="true"
     convertWarningsToExceptions="true"
     processIsolation="false"
-    stopOnFailure="false"
+    stopOnFailure="true"
     executionOrder="random"
     failOnWarning="true"
     failOnRisky="true"
@@ -19,7 +19,7 @@
     verbose="true"
 >
     <testsuites>
-        <testsuite name="VendorName Test Suite">
+        <testsuite name="Datomatic Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
