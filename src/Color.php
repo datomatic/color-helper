@@ -20,7 +20,6 @@ class Color
     /** @var array<string,int> */
     protected array $cmyk = [];
 
-    /** @param array<string,int> $rgb */
     public function __construct(int $r, int $g, int $b)
     {
         $rgb = self::sanitizeRgb($r, $g, $b);
@@ -369,7 +368,7 @@ class Color
      */
     public static function random(): Color
     {
-        return new Color(['r' => rand(0,255), 'g' => rand(0,255), 'b' => rand(0,255)]);
+        return new Color(rand(0,255), rand(0,255), rand(0,255));
     }
 
     /**
@@ -387,7 +386,7 @@ class Color
         $g = (int) round($rgb1['g']*(1-$ratio)+$rgb2['g']*$ratio);
         $b = (int) round($rgb1['b']*(1-$ratio)+$rgb2['b']*$ratio);
 
-        return new Color(['r' => $r, 'g' => $g, 'b' => $b]);
+        return new Color($r, $g, $b);
     }
 
     /**
@@ -418,11 +417,11 @@ class Color
         }
 
         $count = count($colors);
-        $r /= $count;
-        $g /= $count;
-        $b /= $count;
+        $r = (int) round($r/$count);
+        $g = (int) round($g/$count);
+        $b = (int) round($b/$count);
 
-        return new Color(['r' => (int) round($r), 'g' => (int) round($g), 'b' => (int) round($b)]);
+        return new Color($r, $g, $b);
     }
 
 }
