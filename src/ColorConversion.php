@@ -36,6 +36,10 @@ class ColorConversion
      */
     public static function rgbToHsv(int $r, int $b, int $g): array
     {
+        $r /= 255;
+        $g /= 255;
+        $b /= 255;
+
         $max = max($r, $g, $b);
         $min = min($r, $g, $b);
         $delta = $max - $min;
@@ -50,11 +54,11 @@ class ColorConversion
             $h = 60 * ((($r - $g) / $delta) + 4);
         }
 
-        $s = (bool)($max ? $delta / $max : 0);
+        $s = (!!$max) ? $delta / $max : 0;
 
         $v = $max;
 
-        return ['h' => (int)floor($h), 's' => (int)floor($s), 'v' => (int)floor($v)];
+        return ['h' => (int)round($h), 's' => (int)round($s), 'v' => (int)round($v)];
     }
 
     /**
