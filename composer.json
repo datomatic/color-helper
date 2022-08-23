@@ -16,8 +16,7 @@
         }
     ],
     "require": {
-        "php": "^8.0",
-        "datomatic/enum-helper": "^0.7"
+        "php": "^8.0"
     },
     "require-dev": {
         "laravel/pint": "^1.1",
