@@ -116,7 +116,7 @@ class Color
 
     protected function setHex(?string $hex = null): self
     {
-        $this->hex = $hex ?? ColorConversion::rgbToHex($this->rgb);
+        $this->hex = $hex ?? ColorConversion::rgbToHex(...$this->rgb);
 
         return $this;
     }

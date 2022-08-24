@@ -7,12 +7,14 @@ class ColorConversion
 {
 
     /**
-     * @param array<string,int> $rbg
+     * @param int $r
+     * @param int $g
+     * @param int $b
      * @return string
      */
-    public static function rgbToHex(array $rbg): string
+    public static function rgbToHex(int $r, int $g, int $b): string
     {
-        return sprintf('%02x%02x%02x', ...array_values($rbg));
+        return sprintf('%02x%02x%02x', $r, $g, $b);
     }
 
     /**
@@ -44,19 +46,21 @@ class ColorConversion
         $min = min($r, $g, $b);
         $delta = $max - $min;
 
-        if (!$delta) {
+        $v = 100 * $max;
+
+        if ($delta == 0) {
             $h = 0;
-        } elseif ($r === $max) {
-            $h = 60 * ((($g - $b) / $delta) % 6);
-        } elseif ($g === $max) {
-            $h = 60 * ((($b - $r) / $delta) + 2);
+            $s = 0;
         } else {
-            $h = 60 * ((($r - $g) / $delta) + 4);
+            $s = 100 * $delta / $max;
+
+            $h = 60 * match ($min) {
+                    $r => 3 - (($g - $b) / $delta),
+                    $b => 1 - (($r - $g) / $delta),
+                    default => 5 - (($b - $r) / $delta),
+                };
         }
 
-        $s = (!!$max) ? $delta / $max : 0;
-
-        $v = $max;
 
         return ['h' => (int)round($h), 's' => (int)round($s), 'v' => (int)round($v)];
     }
@@ -128,7 +132,7 @@ class ColorConversion
             }
         }
 
-        return ['h' => (int)round($h), 's' => (int)round($s), 'l' => (int)round($l)];
+        return ['h' => (int)round($h), 's' => (int)round($s * 100), 'l' => (int)round($l * 100)];
     }
 
     /**
@@ -193,16 +197,20 @@ class ColorConversion
      */
     public static function rgbToCmyk(int $r, int $g, int $b): array
     {
-        $c = (255 - $r) / 255.0 * 100;
-        $m = (255 - $g) / 255.0 * 100;
-        $y = (255 - $b) / 255.0 * 100;
+        $c = 255 - $r;
+        $m = 255 - $g;
+        $y = 255 - $b;
 
-        $k = min([$c, $m, $y]);
-        $c = $c - $k;
-        $m = $m - $k;
-        $y = $y - $k;
+        $k = min($c, $m, $y);
+        $c = ($c - $k) / (255 - $k) * 255;
+        $m = ($m - $k) / (255 - $k) * 255;
+        $y = ($y - $k) / (255 - $k) * 255;
 
-        return ['c' => (int)round($c), 'm' => (int)round($m), 'y' => (int)round($y), 'k' => (int)round($k)];
+        return [
+            'c' => (int)round($c / 255 * 100),
+            'm' => (int)round($m / 255 * 100),
+            'y' => (int)round($y / 255 * 100),
+            'k' => (int)round($k / 255 * 100)];
     }
 
     /**
