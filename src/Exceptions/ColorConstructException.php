@@ -16,9 +16,9 @@ final class ColorConstructException extends Exception
         return new static("HEX color `{$hex}` needs to be 6 or 3 digits long");
     }
 
-    public static function invalidIntegerValue(int $min, int $max): self
+    public static function invalidIntegerValue(string $param, int $min, int $max): self
     {
-        return new static("Input param must be between `{$min}` and `{$max}`");
+        return new static("Input param `{$param}` must be between `{$min}` and `{$max}`");
     }
 
     public static function invalidColorName(string $name): self

@@ -210,14 +210,13 @@ class Color
     }
 
 
-
-    private static function checkRange(int $number, int $min, int $max): bool
+    private static function checkRange(string $param, int $number, int $min, int $max): bool
     {
         if ($number >= $min && $number <= $max) {
             return true;
         }
 
-        throw ColorConstructException::invalidIntegerValue(0, 255);
+        throw ColorConstructException::invalidIntegerValue($param, $min, $max);
     }
 
     /**
@@ -229,7 +228,7 @@ class Color
     protected static function sanitizeRgb(int $r, int $g, int $b): array
     {
         foreach (['r', 'g', 'b'] as $param) {
-            self::checkRange(${$param}, 0, 255);
+            self::checkRange($param, ${$param}, 0, 255);
         }
 
         return ['r' => $r, 'g' => $g, 'b' => $b];
@@ -269,9 +268,9 @@ class Color
     protected static function sanitizeHsv(int $h, int $s, int $v): array
     {
         $h %= 360;
-        self::checkRange($h, 0, 360);
-        self::checkRange($s, 0, 100);
-        self::checkRange($v, 0, 100);
+        foreach (['s', 'v'] as $param) {
+            self::checkRange($param, ${$param}, 0, 100);
+        }
 
         return ['h' => $h, 's' => $s, 'v' => $v];
     }
@@ -287,9 +286,10 @@ class Color
     protected static function sanitizeHsl(int $h, int $s, int $l): array
     {
         $h %= 360;
-        self::checkRange($h, 0, 360);
-        self::checkRange($s, 0, 100);
-        self::checkRange($l, 0, 100);
+
+        foreach (['s', 'l'] as $param) {
+            self::checkRange($param, ${$param}, 0, 100);
+        }
 
         return ['h' => $h, 's' => $s, 'l' => $l];
     }
@@ -305,10 +305,9 @@ class Color
      */
     protected static function sanitizeCmyk(int $c, int $m, int $y, int $k): array
     {
-        self::checkRange($c, 0, 100);
-        self::checkRange($m, 0, 100);
-        self::checkRange($y, 0, 100);
-        self::checkRange($k, 0, 100);
+        foreach (['c', 'm', 'y', 'k'] as $param) {
+            self::checkRange($param, ${$param}, 0, 100);
+        }
 
         return ['c' => $c, 'm' => $m, 'y' => $y, 'k' => $k];
     }
@@ -367,7 +366,7 @@ class Color
      */
     public static function random(): Color
     {
-        return new Color(rand(0,255), rand(0,255), rand(0,255));
+        return new Color(rand(0, 255), rand(0, 255), rand(0, 255));
     }
 
     /**
@@ -381,9 +380,9 @@ class Color
         $rgb1 = $color1->rgb();
         $rgb2 = $color2->rgb();
 
-        $r = (int) round($rgb1['r']*(1-$ratio)+$rgb2['r']*$ratio);
-        $g = (int) round($rgb1['g']*(1-$ratio)+$rgb2['g']*$ratio);
-        $b = (int) round($rgb1['b']*(1-$ratio)+$rgb2['b']*$ratio);
+        $r = (int)round($rgb1['r'] * (1 - $ratio) + $rgb2['r'] * $ratio);
+        $g = (int)round($rgb1['g'] * (1 - $ratio) + $rgb2['g'] * $ratio);
+        $b = (int)round($rgb1['b'] * (1 - $ratio) + $rgb2['b'] * $ratio);
 
         return new Color($r, $g, $b);
     }
@@ -399,7 +398,6 @@ class Color
     }
 
 
-
     /**
      * @param array<Color> $colors
      * @return Color
@@ -408,7 +406,7 @@ class Color
     {
         $r = $g = $b = 0;
 
-        foreach($colors as $color){
+        foreach ($colors as $color) {
             $rgb = $color->rgb();
             $r += $rgb['r'];
             $g += $rgb['g'];
@@ -416,9 +414,9 @@ class Color
         }
 
         $count = count($colors);
-        $r = (int) round($r/$count);
-        $g = (int) round($g/$count);
-        $b = (int) round($b/$count);
+        $r = (int)round($r / $count);
+        $g = (int)round($g / $count);
+        $b = (int)round($b / $count);
 
         return new Color($r, $g, $b);
     }

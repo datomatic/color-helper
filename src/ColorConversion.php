@@ -85,7 +85,7 @@ class ColorConversion
         $max = max($rgb);
         $factor = 255 * ($v / 100);
         for ($i = 0; $i < 3; $i++) {
-            $rgb[$i] = (int)round(($rgb[$i] + ($max - $rgb[$i]) * (1 - $s / 100)) * $factor);
+            $rgb[$i] = (int) round(($rgb[$i] + ($max - $rgb[$i]) * (1 - $s / 100)) * $factor);
         }
 
         return ['r' => (int)$rgb[0], 'g' => (int)$rgb[1], 'b' => (int)$rgb[2]];
@@ -144,9 +144,6 @@ class ColorConversion
     public static function hslToRgb(int $h, int $s, int $l): array
     {
         $h /= 60;
-        if ($h < 0) {
-            $h = 6 - fmod(-$h, 6);
-        }
         $h = fmod($h, 6);
 
         $s = max(0, min(1, $s / 100));

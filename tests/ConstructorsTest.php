@@ -1,6 +1,7 @@
 <?php
 
 use Datomatic\Color\Color;
+use Datomatic\Color\Exceptions\ColorConstructException;
 
 it('can instantiate from string', function (string $string, string $hex) {
     $enum = Color::fromName($string);
@@ -168,6 +169,7 @@ it('can instantiate from hex', function (string $hex, string $res) {
     $enum = Color::fromHex($hex);
     expect($enum)->toBeInstanceOf(Color::class);
     expect($enum->hex())->toBe($res);
+    expect((string) $enum)->toBe($res);
 })->with([
     ['#f0f8ff', '#f0f8ff'],
     ['f0f8ff', '#f0f8ff'],
@@ -209,4 +211,76 @@ it('can instantiate from cmyk', function (int $c, int $m, int $y, int $k, string
 })->with([
     [6, 3, 0, 0, '#f0f7ff'],
     [0, 1, 48, 0, '#fffc85'],
+]);
+
+it('throw invalidColorName with fromName wrong param', function () {
+    expect(fn() => Color::fromName('bob'))
+        ->toThrow(ColorConstructException::class, 'Color name `bob` was not recognized');
+});
+
+it('throw invalidHexFormat with fromHex wrong param', function () {
+    expect(fn() => Color::fromHex('%&GHSN'))
+        ->toThrow(ColorConstructException::class, 'HEX color `%&ghsn` doesn\'t match the correct format');
+});
+
+it('throw invalidHexLenght with fromHex wrong param', function () {
+    expect(fn() => Color::fromHex('ffff'))
+        ->toThrow(ColorConstructException::class, 'HEX color `ffff` needs to be 6 or 3 digits long');
+});
+
+
+it('throw invalidIntegerValue with fromRgb wrong param', function (string $param, int $r, int $g, int $b) {
+    expect(fn() => Color::fromRgb($r, $g, $b))
+        ->toThrow(ColorConstructException::class, "Input param `{$param}` must be between `0` and `255`");
+})->with([
+    ['r', 300, 200, 10],
+    ['g', 34, -4, 300],
+    ['b', 100, 4, 280]
+]);
+
+it('throw invalidIntegerValue with fromHsv wrong param', function (string $param, int $h, int $s, int $v) {
+    expect(fn() => Color::fromHsv($h, $s, $v))
+        ->toThrow(ColorConstructException::class, "Input param `{$param}` must be between `0` and `100`");
+})->with([
+    ['s', 100, 200, 70],
+    ['v', 100, 100, 300],
+    ['v', 100, 100, -300]
+]);
+
+
+it('not throw invalidIntegerValue with fromHsv h wrong param', function (int $h, int $s, int $v) {
+    expect(fn($h, $s, $v) => Color::fromHsv($h, $s, $v))
+        ->not->toThrow(ColorConstructException::class);
+})->with([
+    [-20, 100, 0],
+    [380, 0, 100],
+]);
+
+
+it('throw invalidIntegerValue with fromHsl wrong param', function (string $param, int $h, int $s, int $l) {
+    expect(fn() => Color::fromHsl($h, $s, $l))
+        ->toThrow(ColorConstructException::class, "Input param `{$param}` must be between `0` and `100`");
+})->with([
+    ['s', 100, 200, 70],
+    ['l', 100, 100, 300],
+    ['l', 100, 100, -300]
+]);
+
+
+it('not throw invalidIntegerValue with fromHsl h wrong param', function (int $h, int $s, int $l) {
+    expect(fn($h, $s, $l) => Color::fromHsl($h, $s, $l))
+        ->not->toThrow(ColorConstructException::class);
+})->with([
+    [-20, 100, 0],
+    [380, 0, 100],
+]);
+
+it('throw invalidIntegerValue with fromCmyk wrong param', function (string $param, int $c, int $m, int $y, int $k) {
+    expect(fn() => Color::fromCmyk($c, $m, $y, $k))
+        ->toThrow(ColorConstructException::class, "Input param `{$param}` must be between `0` and `100`");
+})->with([
+    ['c', -300, 200, 70, 60],
+    ['m', 100, 200, 800, 50],
+    ['y', 100, 100, -300, 50],
+    ['k', 100, 100, 80, 150],
 ]);
