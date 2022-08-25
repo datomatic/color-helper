@@ -312,6 +312,25 @@ class Color
         return ['c' => $c, 'm' => $m, 'y' => $y, 'k' => $k];
     }
 
+
+    /**
+     * @param int $limit
+     * @return bool
+     */
+    public function isLight(int $limit = 130): bool
+    {
+        return ($this->rgb['r'] * 299 + $this->rgb['g'] * 587 + $this->rgb['b'] * 114) / 1000 > $limit;
+    }
+
+    /**
+     * @param int $limit
+     * @return bool
+     */
+    public function isDark(int $limit = 130): bool
+    {
+        return ! $this->isLight($limit);
+    }
+
     /**
      * @return float
      */
