@@ -1,11 +1,12 @@
-# A PHP toolkit class to manage colors functionalities
+![Color Helper](branding/light.png)
+# Color Helper
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/datomatic/color-helper.svg?style=flat-square)](https://packagist.org/packages/datomatic/color-helper)
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/datomatic/color-helper/run-tests?label=tests)](https://github.com/datomatic/color-helper/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/datomatic/color-helper/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/datomatic/color-helper/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/datomatic/color-helper.svg?style=flat-square)](https://packagist.org/packages/datomatic/color-helper)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+A PHP toolkit class to manage colors functionalities
 
 ## Installation
 
