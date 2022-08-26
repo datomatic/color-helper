@@ -1,4 +1,4 @@
-![Color Helper](branding/light.png)
+![Color Helper-Dark](branding/dark.png#gh-dark-mode-only)![Color Helper-Light](branding/light.png#gh-light-mode-only)
 # Color Helper
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/datomatic/color-helper.svg?style=flat-square)](https://packagist.org/packages/datomatic/color-helper)
