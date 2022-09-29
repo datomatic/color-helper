@@ -28,7 +28,7 @@ class Color
     /* From methods */
 
     /**
-     * @param string $name
+     * @param  string  $name
      * @return Color
      *
      * @throws ColorConstructException
@@ -43,9 +43,9 @@ class Color
     }
 
     /**
-     * @param int $r
-     * @param int $g
-     * @param int $b
+     * @param  int  $r
+     * @param  int  $g
+     * @param  int  $b
      * @return Color
      */
     public static function fromRgb(int $r, int $g, int $b): Color
@@ -54,7 +54,7 @@ class Color
     }
 
     /**
-     * @param string $hex
+     * @param  string  $hex
      * @return Color
      *
      * @throws ColorConstructException
@@ -68,9 +68,9 @@ class Color
     }
 
     /**
-     * @param int $h
-     * @param int $s
-     * @param int $v
+     * @param  int  $h
+     * @param  int  $s
+     * @param  int  $v
      * @return Color
      */
     public static function fromHsv(int $h, int $s, int $v): Color
@@ -82,9 +82,9 @@ class Color
     }
 
     /**
-     * @param int $h
-     * @param int $s
-     * @param int $l
+     * @param  int  $h
+     * @param  int  $s
+     * @param  int  $l
      * @return Color
      */
     public static function fromHsl(int $h, int $s, int $l): Color
@@ -96,11 +96,12 @@ class Color
     }
 
     /**
-     * @param int $c
-     * @param int $m
-     * @param int $y
-     * @param int $k
+     * @param  int  $c
+     * @param  int  $m
+     * @param  int  $y
+     * @param  int  $k
      * @return Color
+     *
      * @throws ColorConstructException
      */
     public static function fromCmyk(int $c, int $m, int $y, int $k): Color
@@ -111,7 +112,6 @@ class Color
         return (new Color(...$rgb))->setCmyk(['c' => $c, 'm' => $m, 'y' => $y, 'k' => $k]);
     }
 
-
     /* protected Setter methods */
 
     protected function setHex(?string $hex = null): self
@@ -121,7 +121,7 @@ class Color
         return $this;
     }
 
-    /**  @param null|array<string,int> $hsv */
+    /**  @param  null|array<string,int>  $hsv */
     protected function setHsv(?array $hsv = null): self
     {
         $this->hsv = $hsv ?? ColorConversion::rgbToHsv(...$this->rgb);
@@ -129,7 +129,7 @@ class Color
         return $this;
     }
 
-    /**  @param null|array<string,int> $hsl */
+    /**  @param  null|array<string,int>  $hsl */
     protected function setHsl(?array $hsl = null): self
     {
         $this->hsl = $hsl ?? ColorConversion::rgbToHsl(...$this->rgb);
@@ -137,7 +137,7 @@ class Color
         return $this;
     }
 
-    /**  @param null|array<string,int> $cmyk */
+    /**  @param  null|array<string,int>  $cmyk */
     protected function setCmyk(?array $cmyk = null): self
     {
         $this->cmyk = $cmyk ?? ColorConversion::rgbToCmyk(...$this->rgb);
@@ -156,16 +156,16 @@ class Color
     }
 
     /**
-     * @param bool $hash
+     * @param  bool  $hash
      * @return string
      */
     public function hex(bool $hash = true): string
     {
-        if (!$this->hex) {
+        if (! $this->hex) {
             $this->setHex();
         }
 
-        return ($hash ? '#' : '') . $this->hex;
+        return ($hash ? '#' : '').$this->hex;
     }
 
     /**
@@ -173,7 +173,7 @@ class Color
      */
     public function hsv(): array
     {
-        if (!$this->hsv) {
+        if (! $this->hsv) {
             $this->setHsv();
         }
 
@@ -185,7 +185,7 @@ class Color
      */
     public function hsl(): array
     {
-        if (!$this->hsl) {
+        if (! $this->hsl) {
             $this->setHsl();
         }
 
@@ -197,7 +197,7 @@ class Color
      */
     public function cmyk(): array
     {
-        if (!$this->cmyk) {
+        if (! $this->cmyk) {
             $this->setCmyk();
         }
 
@@ -209,7 +209,6 @@ class Color
         return $this->hex();
     }
 
-
     private static function checkRange(string $param, int $number, int $min, int $max): bool
     {
         if ($number >= $min && $number <= $max) {
@@ -220,9 +219,9 @@ class Color
     }
 
     /**
-     * @param int $r
-     * @param int $g
-     * @param int $b
+     * @param  int  $r
+     * @param  int  $g
+     * @param  int  $b
      * @return array<string,int>
      */
     protected static function sanitizeRgb(int $r, int $g, int $b): array
@@ -235,7 +234,7 @@ class Color
     }
 
     /**
-     * @param string $hex
+     * @param  string  $hex
      * @return string
      *
      * @throws ColorConstructException
@@ -244,12 +243,12 @@ class Color
     {
         $hex = strtolower(str_replace('#', '', $hex));
 
-        if (!preg_match('/^[a-fA-F0-9]+$/', $hex)) {
+        if (! preg_match('/^[a-fA-F0-9]+$/', $hex)) {
             throw ColorConstructException::invalidHexFormat($hex);
         }
 
         if (strlen($hex) === 3) {
-            $hex = $hex[0] . $hex[0] . $hex[1] . $hex[1] . $hex[2] . $hex[2];
+            $hex = $hex[0].$hex[0].$hex[1].$hex[1].$hex[2].$hex[2];
         } elseif (strlen($hex) !== 6) {
             throw ColorConstructException::invalidHexLenght($hex);
         }
@@ -258,9 +257,9 @@ class Color
     }
 
     /**
-     * @param int $h
-     * @param int $s
-     * @param int $v
+     * @param  int  $h
+     * @param  int  $s
+     * @param  int  $v
      * @return array<string,int>
      *
      * @throws ColorConstructException
@@ -276,9 +275,9 @@ class Color
     }
 
     /**
-     * @param int $h
-     * @param int $s
-     * @param int $l
+     * @param  int  $h
+     * @param  int  $s
+     * @param  int  $l
      * @return array<string,int>
      *
      * @throws ColorConstructException
@@ -295,10 +294,10 @@ class Color
     }
 
     /**
-     * @param int $c
-     * @param int $m
-     * @param int $y
-     * @param int $k
+     * @param  int  $c
+     * @param  int  $m
+     * @param  int  $y
+     * @param  int  $k
      * @return array<string,int>
      *
      * @throws ColorConstructException
@@ -312,9 +311,8 @@ class Color
         return ['c' => $c, 'm' => $m, 'y' => $y, 'k' => $k];
     }
 
-
     /**
-     * @param int $limit
+     * @param  int  $limit
      * @return bool
      */
     public function isLight(int $limit = 130): bool
@@ -323,7 +321,7 @@ class Color
     }
 
     /**
-     * @param int $limit
+     * @param  int  $limit
      * @return bool
      */
     public function isDark(int $limit = 130): bool
@@ -354,7 +352,7 @@ class Color
     }
 
     /**
-     * @param Color $color
+     * @param  Color  $color
      * @return float
      */
     public function contrast(Color $color): float
@@ -363,7 +361,7 @@ class Color
     }
 
     /**
-     * @param array<Color> $colors
+     * @param  array<Color>  $colors
      * @return Color
      */
     public function bestContrastColor(array $colors): Color
@@ -389,9 +387,9 @@ class Color
     }
 
     /**
-     * @param Color $color1
-     * @param Color $color2
-     * @param float $ratio
+     * @param  Color  $color1
+     * @param  Color  $color2
+     * @param  float  $ratio
      * @return Color
      */
     public static function mixColors(Color $color1, Color $color2, float $ratio = 0.5): Color
@@ -399,16 +397,16 @@ class Color
         $rgb1 = $color1->rgb();
         $rgb2 = $color2->rgb();
 
-        $r = (int)round($rgb1['r'] * (1 - $ratio) + $rgb2['r'] * $ratio);
-        $g = (int)round($rgb1['g'] * (1 - $ratio) + $rgb2['g'] * $ratio);
-        $b = (int)round($rgb1['b'] * (1 - $ratio) + $rgb2['b'] * $ratio);
+        $r = (int) round($rgb1['r'] * (1 - $ratio) + $rgb2['r'] * $ratio);
+        $g = (int) round($rgb1['g'] * (1 - $ratio) + $rgb2['g'] * $ratio);
+        $b = (int) round($rgb1['b'] * (1 - $ratio) + $rgb2['b'] * $ratio);
 
         return new Color($r, $g, $b);
     }
 
     /**
-     * @param Color $color
-     * @param float $ratio
+     * @param  Color  $color
+     * @param  float  $ratio
      * @return Color
      */
     public function mix(Color $color, float $ratio = 0.5): Color
@@ -416,9 +414,8 @@ class Color
         return self::mixColors($this, $color, $ratio);
     }
 
-
     /**
-     * @param array<Color> $colors
+     * @param  array<Color>  $colors
      * @return Color
      */
     public static function averageColors(array $colors): Color
@@ -433,9 +430,9 @@ class Color
         }
 
         $count = count($colors);
-        $r = (int)round($r / $count);
-        $g = (int)round($g / $count);
-        $b = (int)round($b / $count);
+        $r = (int) round($r / $count);
+        $g = (int) round($g / $count);
+        $b = (int) round($b / $count);
 
         return new Color($r, $g, $b);
     }
@@ -447,5 +444,4 @@ class Color
     {
         return new Color(...$this->rgb);
     }
-
 }

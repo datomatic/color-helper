@@ -35,7 +35,6 @@ it('can convert hex to rgb', function (string $hex, int $r, int $g, int $b) {
     ['FFF', 255, 255, 255],
 ]);
 
-
 it('can convert rgb to hsv', function (array $rgb, array $hsv) {
     $color = Color::fromRgb(...$rgb);
     expect($color->hsv())->toBe($hsv);
@@ -60,7 +59,6 @@ it('can convert hsv to rgb', function (array $hsv, array $rgb) {
     [['h' => 0, 's' => 0, 'v' => 100], ['r' => 255, 'g' => 255, 'b' => 255]],
 ]);
 
-
 it('can convert rgb to hsl', function (array $rgb, array $hsl) {
     $color = Color::fromRgb(...$rgb);
     expect($color->hsl())->toBe($hsl);
@@ -72,7 +70,6 @@ it('can convert rgb to hsl', function (array $rgb, array $hsl) {
     [['r' => 0, 'g' => 0, 'b' => 0], ['h' => 0, 's' => 0, 'l' => 0]],
     [['r' => 255, 'g' => 255, 'b' => 255], ['h' => 0, 's' => 0, 'l' => 100]],
 ]);
-
 
 it('can convert hsl to rgb', function (array $hsl, array $rgb) {
     $color = Color::fromHsl(...$hsl);
@@ -87,7 +84,6 @@ it('can convert hsl to rgb', function (array $hsl, array $rgb) {
     [['h' => 0, 's' => 0, 'l' => 100], ['r' => 255, 'g' => 255, 'b' => 255]],
 ]);
 
-
 it('can convert rgb to cmyk', function (array $rgb, array $cmyk) {
     $color = Color::fromRgb(...$rgb);
     expect($color->cmyk())->toBe($cmyk);
@@ -99,7 +95,6 @@ it('can convert rgb to cmyk', function (array $rgb, array $cmyk) {
     [['r' => 0, 'g' => 0, 'b' => 0], ['c' => 0, 'm' => 0, 'y' => 0, 'k' => 100]],
     [['r' => 255, 'g' => 255, 'b' => 255], ['c' => 0, 'm' => 0, 'y' => 0, 'k' => 0]],
 ]);
-
 
 it('can convert cmyk to rgb', function (array $cmyk, array $rgb) {
     $color = Color::fromCmyk(...$cmyk);

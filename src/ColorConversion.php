@@ -2,14 +2,12 @@
 
 namespace Datomatic\Color;
 
-
 class ColorConversion
 {
-
     /**
-     * @param int $r
-     * @param int $g
-     * @param int $b
+     * @param  int  $r
+     * @param  int  $g
+     * @param  int  $b
      * @return string
      */
     public static function rgbToHex(int $r, int $g, int $b): string
@@ -18,7 +16,7 @@ class ColorConversion
     }
 
     /**
-     * @param string $hex
+     * @param  string  $hex
      * @return array<string,int>
      */
     public static function hexToRgb(string $hex): array
@@ -27,13 +25,13 @@ class ColorConversion
         $g = hexdec(substr($hex, 2, 2));
         $b = hexdec(substr($hex, 4, 2));
 
-        return ['r' => (int)round($r), 'g' => (int)round($g), 'b' => (int)round($b)];
+        return ['r' => (int) round($r), 'g' => (int) round($g), 'b' => (int) round($b)];
     }
 
     /**
-     * @param int $r
-     * @param int $b
-     * @param int $g
+     * @param  int  $r
+     * @param  int  $b
+     * @param  int  $g
      * @return array<string,int>
      */
     public static function rgbToHsv(int $r, int $b, int $g): array
@@ -55,20 +53,19 @@ class ColorConversion
             $s = 100 * $delta / $max;
 
             $h = 60 * match ($min) {
-                    $r => 3 - (($g - $b) / $delta),
-                    $b => 1 - (($r - $g) / $delta),
-                    default => 5 - (($b - $r) / $delta),
-                };
+                $r => 3 - (($g - $b) / $delta),
+                $b => 1 - (($r - $g) / $delta),
+                default => 5 - (($b - $r) / $delta),
+            };
         }
 
-
-        return ['h' => (int)round($h), 's' => (int)round($s), 'v' => (int)round($v)];
+        return ['h' => (int) round($h), 's' => (int) round($s), 'v' => (int) round($v)];
     }
 
     /**
-     * @param int $h
-     * @param int $s
-     * @param int $v
+     * @param  int  $h
+     * @param  int  $s
+     * @param  int  $v
      * @return array<string,int>
      */
     public static function hsvToRgb(int $h, int $s, int $v): array
@@ -88,13 +85,13 @@ class ColorConversion
             $rgb[$i] = (int) round(($rgb[$i] + ($max - $rgb[$i]) * (1 - $s / 100)) * $factor);
         }
 
-        return ['r' => (int)$rgb[0], 'g' => (int)$rgb[1], 'b' => (int)$rgb[2]];
+        return ['r' => (int) $rgb[0], 'g' => (int) $rgb[1], 'b' => (int) $rgb[2]];
     }
 
     /**
-     * @param int $r
-     * @param int $g
-     * @param int $b
+     * @param  int  $r
+     * @param  int  $g
+     * @param  int  $b
      * @return array<string,int>
      */
     public static function rgbToHsl(int $r, int $g, int $b): array
@@ -132,13 +129,13 @@ class ColorConversion
             }
         }
 
-        return ['h' => (int)round($h), 's' => (int)round($s * 100), 'l' => (int)round($l * 100)];
+        return ['h' => (int) round($h), 's' => (int) round($s * 100), 'l' => (int) round($l * 100)];
     }
 
     /**
-     * @param int $h
-     * @param int $s
-     * @param int $l
+     * @param  int  $h
+     * @param  int  $s
+     * @param  int  $l
      * @return array<string,int>
      */
     public static function hslToRgb(int $h, int $s, int $l): array
@@ -179,9 +176,9 @@ class ColorConversion
         }
 
         $m = $l - $c / 2;
-        $r = (int)round(($r + $m) * 255);
-        $g = (int)round(($g + $m) * 255);
-        $b = (int)round(($b + $m) * 255);
+        $r = (int) round(($r + $m) * 255);
+        $g = (int) round(($g + $m) * 255);
+        $b = (int) round(($b + $m) * 255);
 
         return ['r' => $r, 'g' => $g, 'b' => $b];
     }
@@ -208,17 +205,17 @@ class ColorConversion
         }
 
         return [
-            'c' => (int)round($c / 255 * 100),
-            'm' => (int)round($m / 255 * 100),
-            'y' => (int)round($y / 255 * 100),
-            'k' => (int)round($k / 255 * 100)];
+            'c' => (int) round($c / 255 * 100),
+            'm' => (int) round($m / 255 * 100),
+            'y' => (int) round($y / 255 * 100),
+            'k' => (int) round($k / 255 * 100), ];
     }
 
     /**
-     * @param int $c
-     * @param int $m
-     * @param int $y
-     * @param int $k
+     * @param  int  $c
+     * @param  int  $m
+     * @param  int  $y
+     * @param  int  $k
      * @return array<string,int>
      */
     public static function cmykToRgb(int $c, int $m, int $y, int $k): array
@@ -232,9 +229,9 @@ class ColorConversion
         $g = 1 - ($m * (1 - $k)) - $k;
         $b = 1 - ($y * (1 - $k)) - $k;
 
-        $r = (int)round($r * 255);
-        $g = (int)round($g * 255);
-        $b = (int)round($b * 255);
+        $r = (int) round($r * 255);
+        $g = (int) round($g * 255);
+        $b = (int) round($b * 255);
 
         return ['r' => $r, 'g' => $g, 'b' => $b];
     }
