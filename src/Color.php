@@ -28,9 +28,6 @@ class Color
     /* From methods */
 
     /**
-     * @param  string  $name
-     * @return Color
-     *
      * @throws ColorConstructException
      */
     public static function fromName(string $name): Color
@@ -42,21 +39,12 @@ class Color
         throw ColorConstructException::invalidColorName($name);
     }
 
-    /**
-     * @param  int  $r
-     * @param  int  $g
-     * @param  int  $b
-     * @return Color
-     */
     public static function fromRgb(int $r, int $g, int $b): Color
     {
         return new Color($r, $g, $b);
     }
 
     /**
-     * @param  string  $hex
-     * @return Color
-     *
      * @throws ColorConstructException
      */
     public static function fromHex(string $hex): Color
@@ -67,12 +55,6 @@ class Color
         return (new Color(...$rgb))->setHex($hex);
     }
 
-    /**
-     * @param  int  $h
-     * @param  int  $s
-     * @param  int  $v
-     * @return Color
-     */
     public static function fromHsv(int $h, int $s, int $v): Color
     {
         $hsv = self::sanitizeHsv($h, $s, $v);
@@ -81,12 +63,6 @@ class Color
         return (new Color(...$rgb))->setHsv($hsv);
     }
 
-    /**
-     * @param  int  $h
-     * @param  int  $s
-     * @param  int  $l
-     * @return Color
-     */
     public static function fromHsl(int $h, int $s, int $l): Color
     {
         $hsl = self::sanitizeHsl($h, $s, $l);
@@ -96,12 +72,6 @@ class Color
     }
 
     /**
-     * @param  int  $c
-     * @param  int  $m
-     * @param  int  $y
-     * @param  int  $k
-     * @return Color
-     *
      * @throws ColorConstructException
      */
     public static function fromCmyk(int $c, int $m, int $y, int $k): Color
@@ -155,10 +125,6 @@ class Color
         return $this->rgb;
     }
 
-    /**
-     * @param  bool  $hash
-     * @return string
-     */
     public function hex(bool $hash = true): string
     {
         if (! $this->hex) {
@@ -219,9 +185,6 @@ class Color
     }
 
     /**
-     * @param  int  $r
-     * @param  int  $g
-     * @param  int  $b
      * @return array<string,int>
      */
     protected static function sanitizeRgb(int $r, int $g, int $b): array
@@ -234,9 +197,6 @@ class Color
     }
 
     /**
-     * @param  string  $hex
-     * @return string
-     *
      * @throws ColorConstructException
      */
     protected static function sanitizeHex(string $hex): string
@@ -257,9 +217,6 @@ class Color
     }
 
     /**
-     * @param  int  $h
-     * @param  int  $s
-     * @param  int  $v
      * @return array<string,int>
      *
      * @throws ColorConstructException
@@ -275,9 +232,6 @@ class Color
     }
 
     /**
-     * @param  int  $h
-     * @param  int  $s
-     * @param  int  $l
      * @return array<string,int>
      *
      * @throws ColorConstructException
@@ -294,10 +248,6 @@ class Color
     }
 
     /**
-     * @param  int  $c
-     * @param  int  $m
-     * @param  int  $y
-     * @param  int  $k
      * @return array<string,int>
      *
      * @throws ColorConstructException
@@ -311,27 +261,16 @@ class Color
         return ['c' => $c, 'm' => $m, 'y' => $y, 'k' => $k];
     }
 
-    /**
-     * @param  int  $limit
-     * @return bool
-     */
     public function isLight(int $limit = 130): bool
     {
         return ($this->rgb['r'] * 299 + $this->rgb['g'] * 587 + $this->rgb['b'] * 114) / 1000 > $limit;
     }
 
-    /**
-     * @param  int  $limit
-     * @return bool
-     */
     public function isDark(int $limit = 130): bool
     {
         return ! $this->isLight($limit);
     }
 
-    /**
-     * @return float
-     */
     public function luminosity(): float
     {
         return 0.2126 * pow($this->rgb['r'] / 255, 2.2) +
@@ -351,10 +290,6 @@ class Color
         }
     }
 
-    /**
-     * @param  Color  $color
-     * @return float
-     */
     public function contrast(Color $color): float
     {
         return self::contrastColors($this, $color);
@@ -362,7 +297,6 @@ class Color
 
     /**
      * @param  array<Color>  $colors
-     * @return Color
      */
     public function bestContrastColor(array $colors): Color
     {
@@ -378,20 +312,11 @@ class Color
         return $bestColor;
     }
 
-    /**
-     * @return Color
-     */
     public static function random(): Color
     {
         return new Color(rand(0, 255), rand(0, 255), rand(0, 255));
     }
 
-    /**
-     * @param  Color  $color1
-     * @param  Color  $color2
-     * @param  float  $ratio
-     * @return Color
-     */
     public static function mixColors(Color $color1, Color $color2, float $ratio = 0.5): Color
     {
         $rgb1 = $color1->rgb();
@@ -404,11 +329,6 @@ class Color
         return new Color($r, $g, $b);
     }
 
-    /**
-     * @param  Color  $color
-     * @param  float  $ratio
-     * @return Color
-     */
     public function mix(Color $color, float $ratio = 0.5): Color
     {
         return self::mixColors($this, $color, $ratio);
@@ -416,7 +336,6 @@ class Color
 
     /**
      * @param  array<Color>  $colors
-     * @return Color
      */
     public static function averageColors(array $colors): Color
     {
@@ -437,9 +356,6 @@ class Color
         return new Color($r, $g, $b);
     }
 
-    /**
-     * @return self
-     */
     public function clone(): self
     {
         return new Color(...$this->rgb);

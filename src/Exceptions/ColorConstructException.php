@@ -8,21 +8,21 @@ final class ColorConstructException extends Exception
 {
     public static function invalidHexFormat(string $hex): self
     {
-        return new static("HEX color `{$hex}` doesn't match the correct format");
+        return new self("HEX color `{$hex}` doesn't match the correct format");
     }
 
     public static function invalidHexLenght(string $hex): self
     {
-        return new static("HEX color `{$hex}` needs to be 6 or 3 digits long");
+        return new self("HEX color `{$hex}` needs to be 6 or 3 digits long");
     }
 
     public static function invalidIntegerValue(string $param, int $min, int $max): self
     {
-        return new static("Input param `{$param}` must be between `{$min}` and `{$max}`");
+        return new self("Input param `{$param}` must be between `{$min}` and `{$max}`");
     }
 
     public static function invalidColorName(string $name): self
     {
-        return new static("Color name `{$name}` was not recognized");
+        return new self("Color name `{$name}` was not recognized");
     }
 }

@@ -4,19 +4,12 @@ namespace Datomatic\Color;
 
 class ColorConversion
 {
-    /**
-     * @param  int  $r
-     * @param  int  $g
-     * @param  int  $b
-     * @return string
-     */
     public static function rgbToHex(int $r, int $g, int $b): string
     {
         return sprintf('%02x%02x%02x', $r, $g, $b);
     }
 
     /**
-     * @param  string  $hex
      * @return array<string,int>
      */
     public static function hexToRgb(string $hex): array
@@ -29,9 +22,6 @@ class ColorConversion
     }
 
     /**
-     * @param  int  $r
-     * @param  int  $b
-     * @param  int  $g
      * @return array<string,int>
      */
     public static function rgbToHsv(int $r, int $b, int $g): array
@@ -63,9 +53,6 @@ class ColorConversion
     }
 
     /**
-     * @param  int  $h
-     * @param  int  $s
-     * @param  int  $v
      * @return array<string,int>
      */
     public static function hsvToRgb(int $h, int $s, int $v): array
@@ -89,9 +76,6 @@ class ColorConversion
     }
 
     /**
-     * @param  int  $r
-     * @param  int  $g
-     * @param  int  $b
      * @return array<string,int>
      */
     public static function rgbToHsl(int $r, int $g, int $b): array
@@ -133,9 +117,6 @@ class ColorConversion
     }
 
     /**
-     * @param  int  $h
-     * @param  int  $s
-     * @param  int  $l
      * @return array<string,int>
      */
     public static function hslToRgb(int $h, int $s, int $l): array
@@ -184,9 +165,6 @@ class ColorConversion
     }
 
     /**
-     * @param $r
-     * @param $g
-     * @param $b
      * @return array<string,int>
      */
     public static function rgbToCmyk(int $r, int $g, int $b): array
@@ -212,10 +190,6 @@ class ColorConversion
     }
 
     /**
-     * @param  int  $c
-     * @param  int  $m
-     * @param  int  $y
-     * @param  int  $k
      * @return array<string,int>
      */
     public static function cmykToRgb(int $c, int $m, int $y, int $k): array
