@@ -9,11 +9,14 @@ on:
 jobs:
   test:
     runs-on: ${{ matrix.os }}
+    env:
+      # Composer 2.9 blocks old releases with advisories, which breaks prefer-lowest jobs
+      COMPOSER_NO_SECURITY_BLOCKING: 1
     strategy:
       fail-fast: true
       matrix:
         os: [ubuntu-latest, windows-latest]
-        php: [8.0, 8.1]
+        php: [8.6, 8.1]
         stability: [prefer-lowest, prefer-stable]
 
     name: P${{ matrix.php }} - ${{ matrix.stability }} - ${{ matrix.os }}
