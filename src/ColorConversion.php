@@ -11,6 +11,15 @@ class ColorConversion
         return (($hue % 360) + 360) % 360;
     }
 
+    /**
+     * Rounds half up consistently on every PHP version: PHP 8.4 changed round()
+     * for values like 25.499999999999996, which are 25.5 before the float error.
+     */
+    public static function roundToInt(float|int $value): int
+    {
+        return (int) round(round($value, 6));
+    }
+
     public static function rgbToHex(int $r, int $g, int $b): string
     {
         return sprintf('%02x%02x%02x', $r, $g, $b);
@@ -25,7 +34,7 @@ class ColorConversion
         $g = hexdec(substr($hex, 2, 2));
         $b = hexdec(substr($hex, 4, 2));
 
-        return ['r' => (int) round($r), 'g' => (int) round($g), 'b' => (int) round($b)];
+        return ['r' => self::roundToInt($r), 'g' => self::roundToInt($g), 'b' => self::roundToInt($b)];
     }
 
     /**
@@ -56,7 +65,7 @@ class ColorConversion
             };
         }
 
-        return ['h' => self::normalizeHue((int) round($h)), 's' => (int) round($s), 'v' => (int) round($v)];
+        return ['h' => self::normalizeHue(self::roundToInt($h)), 's' => self::roundToInt($s), 'v' => self::roundToInt($v)];
     }
 
     /**
@@ -77,7 +86,7 @@ class ColorConversion
         $max = max($rgb);
         $factor = 255 * ($v / 100);
         for ($i = 0; $i < 3; $i++) {
-            $rgb[$i] = (int) round(($rgb[$i] + ($max - $rgb[$i]) * (1 - $s / 100)) * $factor);
+            $rgb[$i] = self::roundToInt(($rgb[$i] + ($max - $rgb[$i]) * (1 - $s / 100)) * $factor);
         }
 
         return ['r' => (int) $rgb[0], 'g' => (int) $rgb[1], 'b' => (int) $rgb[2]];
@@ -109,7 +118,7 @@ class ColorConversion
             };
         }
 
-        return ['h' => self::normalizeHue((int) round($h)), 's' => (int) round($s * 100), 'l' => (int) round($l * 100)];
+        return ['h' => self::normalizeHue(self::roundToInt($h)), 's' => self::roundToInt($s * 100), 'l' => self::roundToInt($l * 100)];
     }
 
     /**
@@ -152,9 +161,9 @@ class ColorConversion
         }
 
         $m = $l - $c / 2;
-        $r = (int) round(($r + $m) * 255);
-        $g = (int) round(($g + $m) * 255);
-        $b = (int) round(($b + $m) * 255);
+        $r = self::roundToInt(($r + $m) * 255);
+        $g = self::roundToInt(($g + $m) * 255);
+        $b = self::roundToInt(($b + $m) * 255);
 
         return ['r' => $r, 'g' => $g, 'b' => $b];
     }
@@ -178,10 +187,10 @@ class ColorConversion
         }
 
         return [
-            'c' => (int) round($c / 255 * 100),
-            'm' => (int) round($m / 255 * 100),
-            'y' => (int) round($y / 255 * 100),
-            'k' => (int) round($k / 255 * 100), ];
+            'c' => self::roundToInt($c / 255 * 100),
+            'm' => self::roundToInt($m / 255 * 100),
+            'y' => self::roundToInt($y / 255 * 100),
+            'k' => self::roundToInt($k / 255 * 100), ];
     }
 
     /**
@@ -198,9 +207,9 @@ class ColorConversion
         $g = 1 - ($m * (1 - $k)) - $k;
         $b = 1 - ($y * (1 - $k)) - $k;
 
-        $r = (int) round($r * 255);
-        $g = (int) round($g * 255);
-        $b = (int) round($b * 255);
+        $r = self::roundToInt($r * 255);
+        $g = self::roundToInt($g * 255);
+        $b = self::roundToInt($b * 255);
 
         return ['r' => $r, 'g' => $g, 'b' => $b];
     }

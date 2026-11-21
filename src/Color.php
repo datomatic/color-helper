@@ -167,7 +167,7 @@ class Color implements Stringable
     {
         $this->hex ??= ColorConversion::rgbToHex(...$this->rgb);
 
-        $alphaHex = $this->isOpaque() ? '' : sprintf('%02x', (int) round($this->alpha * 255));
+        $alphaHex = $this->isOpaque() ? '' : sprintf('%02x', ColorConversion::roundToInt($this->alpha * 255));
 
         return ($hash ? '#' : '').$this->hex.$alphaHex;
     }
@@ -391,9 +391,9 @@ class Color implements Stringable
         $channel = static fn (int|float $first, int|float $second): float => $first * (1 - $ratio) + $second * $ratio;
 
         return new self(
-            (int) round($channel($rgb1['r'], $rgb2['r'])),
-            (int) round($channel($rgb1['g'], $rgb2['g'])),
-            (int) round($channel($rgb1['b'], $rgb2['b'])),
+            ColorConversion::roundToInt($channel($rgb1['r'], $rgb2['r'])),
+            ColorConversion::roundToInt($channel($rgb1['g'], $rgb2['g'])),
+            ColorConversion::roundToInt($channel($rgb1['b'], $rgb2['b'])),
             round($channel($color1->alpha(), $color2->alpha()), 3),
         );
     }
@@ -431,9 +431,9 @@ class Color implements Stringable
         $count = count($colors);
 
         return new self(
-            (int) round($r / $count),
-            (int) round($g / $count),
-            (int) round($b / $count),
+            ColorConversion::roundToInt($r / $count),
+            ColorConversion::roundToInt($g / $count),
+            ColorConversion::roundToInt($b / $count),
             round($alpha / $count, 3),
         );
     }
@@ -484,17 +484,17 @@ class Color implements Stringable
 
         if (str_starts_with($function, 'rgb')) {
             return new self(
-                (int) round(self::parseCssNumber($color, $parts[0], 255)),
-                (int) round(self::parseCssNumber($color, $parts[1], 255)),
-                (int) round(self::parseCssNumber($color, $parts[2], 255)),
+                ColorConversion::roundToInt(self::parseCssNumber($color, $parts[0], 255)),
+                ColorConversion::roundToInt(self::parseCssNumber($color, $parts[1], 255)),
+                ColorConversion::roundToInt(self::parseCssNumber($color, $parts[2], 255)),
                 $alpha,
             );
         }
 
         return self::fromHsl(
-            (int) round(self::parseCssNumber($color, str_replace('deg', '', $parts[0]), 360)),
-            (int) round(self::parseCssNumber($color, $parts[1], 100)),
-            (int) round(self::parseCssNumber($color, $parts[2], 100)),
+            ColorConversion::roundToInt(self::parseCssNumber($color, str_replace('deg', '', $parts[0]), 360)),
+            ColorConversion::roundToInt(self::parseCssNumber($color, $parts[1], 100)),
+            ColorConversion::roundToInt(self::parseCssNumber($color, $parts[2], 100)),
             $alpha,
         );
     }

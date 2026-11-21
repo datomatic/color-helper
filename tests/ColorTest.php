@@ -95,7 +95,7 @@ it('manipulates the lightness and saturation', function (string $method, int $am
 })->with([
     'lighten' => ['lighten', 20, '#e08585'],
     'darken' => ['darken', 20, '#7a1f1f'],
-    'saturate' => ['saturate', 20, '#e61919'],
+    'saturate' => ['saturate', 20, '#e61a1a'],
     'desaturate' => ['desaturate', 20, '#b34d4d'],
     'darken to black' => ['darken', 100, '#000000'],
     'lighten to white' => ['lighten', 100, '#ffffff'],
