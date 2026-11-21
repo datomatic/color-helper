@@ -1,9 +1,17 @@
 {
     "name": "datomatic/color-helper",
-    "description": "A PHP toolkit class to manage colors functionalities",
+    "description": "Create, convert, manipulate and compare colors in PHP: hex, RGB, HSL, HSV, CMYK, CSS strings, alpha and WCAG contrast",
     "keywords": [
         "datomatic",
-        "laravel",
+        "color",
+        "colour",
+        "hex",
+        "rgb",
+        "hsl",
+        "hsv",
+        "cmyk",
+        "contrast",
+        "wcag",
         "color-helper"
     ],
     "homepage": "https://github.com/datomatic/color-helper",
@@ -16,15 +24,15 @@
         }
     ],
     "require": {
-        "php": "^8.0"
+        "php": "^8.2"
     },
     "require-dev": {
-        "laravel/pint": "^1.0",
-        "pestphp/pest": "^2.0|^3.0|^4.0|^5.0",
-        "phpstan/phpstan": "^1.8.2|^2.0",
-        "phpstan/extension-installer": "^1.1",
-        "phpstan/phpstan-deprecation-rules": "^1.0|^2.0",
-        "phpstan/phpstan-phpunit": "^1.1|^2.0"
+        "laravel/pint": "^1.18",
+        "pestphp/pest": "^3.0|^4.0|^5.0",
+        "phpstan/phpstan": "^2.0",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan-deprecation-rules": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0"
     },
     "autoload": {
         "psr-4": {
@@ -49,13 +57,6 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true,
             "phpstan/extension-installer": true
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Datomatic\\Color\\ColorServiceProvider"
-            ]
         }
     },
     "minimum-stability": "dev",

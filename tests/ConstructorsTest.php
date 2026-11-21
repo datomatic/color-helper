@@ -223,9 +223,9 @@ it('throw invalidHexFormat with fromHex wrong param', function () {
         ->toThrow(ColorConstructException::class, 'HEX color `%&ghsn` doesn\'t match the correct format');
 });
 
-it('throw invalidHexLenght with fromHex wrong param', function () {
-    expect(fn () => Color::fromHex('ffff'))
-        ->toThrow(ColorConstructException::class, 'HEX color `ffff` needs to be 6 or 3 digits long');
+it('throw invalidHexLength with fromHex wrong param', function () {
+    expect(fn () => Color::fromHex('fffff'))
+        ->toThrow(ColorConstructException::class, 'HEX color `fffff` needs to be 3, 4, 6 or 8 digits long');
 });
 
 it('throw invalidIntegerValue with fromRgb wrong param', function (string $param, int $r, int $g, int $b) {

@@ -1,16 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Datomatic\Color;
 
 class ColorConversion
 {
+    public static function normalizeHue(int $hue): int
+    {
+        return (($hue % 360) + 360) % 360;
+    }
+
     public static function rgbToHex(int $r, int $g, int $b): string
     {
         return sprintf('%02x%02x%02x', $r, $g, $b);
     }
 
     /**
-     * @return array<string,int>
+     * @return array{r: int, g: int, b: int}
      */
     public static function hexToRgb(string $hex): array
     {
@@ -22,9 +29,9 @@ class ColorConversion
     }
 
     /**
-     * @return array<string,int>
+     * @return array{h: int, s: int, v: int}
      */
-    public static function rgbToHsv(int $r, int $b, int $g): array
+    public static function rgbToHsv(int $r, int $g, int $b): array
     {
         $r /= 255;
         $g /= 255;
@@ -49,14 +56,15 @@ class ColorConversion
             };
         }
 
-        return ['h' => (int) round($h), 's' => (int) round($s), 'v' => (int) round($v)];
+        return ['h' => self::normalizeHue((int) round($h)), 's' => (int) round($s), 'v' => (int) round($v)];
     }
 
     /**
-     * @return array<string,int>
+     * @return array{r: int, g: int, b: int}
      */
     public static function hsvToRgb(int $h, int $s, int $v): array
     {
+        $h = self::normalizeHue($h);
         $rgb = [0, 0, 0];
 
         for ($i = 0; $i < 4; $i++) {
@@ -76,7 +84,7 @@ class ColorConversion
     }
 
     /**
-     * @return array<string,int>
+     * @return array{h: int, s: int, l: int}
      */
     public static function rgbToHsl(int $r, int $g, int $b): array
     {
@@ -94,35 +102,22 @@ class ColorConversion
             $h = $s = 0;
         } else {
             $s = $d / (1 - abs(2 * $l - 1));
-            $h = 0;
-            switch ($max) {
-                case $r:
-                    $h = 60 * fmod((($g - $b) / $d), 6);
-                    if ($b > $g) {
-                        $h += 360;
-                    }
-                    break;
-
-                case $g:
-                    $h = 60 * (($b - $r) / $d + 2);
-                    break;
-
-                case $b:
-                    $h = 60 * (($r - $g) / $d + 4);
-                    break;
-            }
+            $h = match ($max) {
+                $r => 60 * fmod(($g - $b) / $d, 6) + ($b > $g ? 360 : 0),
+                $g => 60 * (($b - $r) / $d + 2),
+                default => 60 * (($r - $g) / $d + 4),
+            };
         }
 
-        return ['h' => (int) round($h), 's' => (int) round($s * 100), 'l' => (int) round($l * 100)];
+        return ['h' => self::normalizeHue((int) round($h)), 's' => (int) round($s * 100), 'l' => (int) round($l * 100)];
     }
 
     /**
-     * @return array<string,int>
+     * @return array{r: int, g: int, b: int}
      */
     public static function hslToRgb(int $h, int $s, int $l): array
     {
-        $h /= 60;
-        $h = fmod($h, 6);
+        $h = self::normalizeHue($h) / 60;
 
         $s = max(0, min(1, $s / 100));
         $l = max(0, min(1, $l / 100));
@@ -165,7 +160,7 @@ class ColorConversion
     }
 
     /**
-     * @return array<string,int>
+     * @return array{c: int, m: int, y: int, k: int}
      */
     public static function rgbToCmyk(int $r, int $g, int $b): array
     {
@@ -190,7 +185,7 @@ class ColorConversion
     }
 
     /**
-     * @return array<string,int>
+     * @return array{r: int, g: int, b: int}
      */
     public static function cmykToRgb(int $c, int $m, int $y, int $k): array
     {
